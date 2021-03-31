@@ -34,6 +34,15 @@ class ProcessLocations extends Command
      */
     public function handle(LocationsServiceInterface $locationsService)
     {
-        $locationsService->insertToDB();
+        $url = "https://parlvid.mysociety.org/os/ONSPD/2020-05.zip";
+        $this->info('Downloading and extracting...');
+        $csvFileName = $locationsService->downloadAndExtract($url);
+        if (is_array($csvFileName)) {
+            $this->info($csvFileName['error']);
+            return ;
+        }
+        $this->info('CSV importing to DB...');
+        $locationsService->insertToDB($csvFileName);
+        $this->info('Completed');
     }
 }

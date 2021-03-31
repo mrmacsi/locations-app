@@ -10,7 +10,7 @@ interface LocationsServiceInterface
 
     public function getAll(int $limit): Collection;
 
-    public function insertToDB(): array;
+    public function insertToDB($csvFileName): array;
 
     public function readCSV($csvFile, $array): array;
 }

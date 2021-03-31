@@ -22,6 +22,9 @@
         </style>
     </head>
     <body class="antialiased">
+        <div class="relative flex items-top justify-center">
+            <a class="btn btn-primary" href="{{ route('get-all') }}">Get all locations</a>
+        </div>
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
             <form action="{{route('search')}}" method="GET">
                 <div class="form-group">
@@ -32,7 +35,7 @@
                     <label for="long">Longitude</label>
                     <input type="text" class="form-control" id="long" name="long" placeholder="Enter longitude">
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Search</button>
             </form>
             @if (count($errors) > 0)
                 <div class="alert alert-danger">

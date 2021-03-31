@@ -2,9 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Locations;
+use App\Services\Interfaces\LocationsServiceInterface;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 
 class ProcessLocations extends Command
 {
@@ -30,44 +29,11 @@ class ProcessLocations extends Command
 
     /**
      * Execute the console command.
+     * @param  LocationsServiceInterface  $locationsService
      * @return int
      */
-    public function handle()
+    public function handle(LocationsServiceInterface $locationsService)
     {
-        /*$csvFileName = "ONSPD_MAY_2020_UK_AB.csv";
-        $csvFile = storage_path($csvFileName);
-        $read = $this->readCSV($csvFile, array('delimiter' => ','));
-        $postcodeColumn = 0;
-        $latColumn = 0;
-        $longColumn = 0;
-        foreach ($read as $key => $item) {
-            if ($key == 0) {
-                $postcodeColumn = array_search("pcd", $item);
-                $latColumn = array_search("lat", $item);
-                $longColumn = array_search("long", $item);
-            } else {
-                $postCode = str_replace(" ", "", $item[$postcodeColumn]);
-                $lat = $item[$latColumn];
-                $long = $item[$longColumn];
-                if ($postCode && $lat && $long) {
-                    $locations = new Locations();
-                    $locations->postcode = $postCode;
-                    $locations->latitude = $lat;
-                    $locations->longitude = $long;
-                    $locations->save();
-                }
-            }
-        }
-        return $read;*/
-    }
-
-    public function readCSV($csvFile, $array)
-    {
-        $file_handle = fopen($csvFile, 'r');
-        while ( !feof($file_handle)) {
-            $line_of_text[] = fgetcsv($file_handle, 0, $array['delimiter']);
-        }
-        fclose($file_handle);
-        return $line_of_text;
+        $locationsService->insertToDB();
     }
 }

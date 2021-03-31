@@ -2,20 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LocationRequest;
 use App\Services\Interfaces\LocationsServiceInterface;
-use Illuminate\Http\Request;
 
 class LocationsController extends Controller
 {
-    public function getAllLocations(LocationsServiceInterface $locationsService)
+    public function index()
     {
-        return $locationsService->getAll();
+        return view('index');
     }
 
-    public function searchBy(Request $request, LocationsServiceInterface $locationsService)
+    public function getAllLocations(LocationsServiceInterface $locationsService)
     {
-        $latitude = $request->query('lat');
-        $longitude = $request->query('long');
-        return $locationsService->searchNearBy($latitude, $longitude);
+        $all = $locationsService->getAll(1000);
+        return view('all',['all'=>$all]);
+    }
+
+    public function searchBy(LocationRequest $request, LocationsServiceInterface $locationsService)
+    {
+        try {
+            $request->validated();
+            $latitude = $request->query('lat');
+            $longitude = $request->query('long');
+            $search = $locationsService->searchNearBy($latitude, $longitude);
+            return view('search',['all'=>$search]);
+        }catch (\Exception $e){
+            return redirect()->back();
+        }
     }
 }

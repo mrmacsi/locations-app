@@ -8,5 +8,9 @@ interface LocationsServiceInterface
 {
     public function searchNearBy($latitude, $longitude): Collection;
 
-    public function getAll(): Collection;
+    public function getAll(int $limit): Collection;
+
+    public function insertToDB(): array;
+
+    public function readCSV($csvFile, $array): array;
 }

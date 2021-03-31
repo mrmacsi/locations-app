@@ -13,5 +13,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/get-all', [LocationsController::class, 'getAllLocations']);
-Route::get('/search', [LocationsController::class, 'searchBy']);
+Route::get('/get-all', [LocationsController::class, 'getAllLocations'])->name('get-all');
+Route::get('/search', [LocationsController::class, 'searchBy'])->name('search');
+Route::get('/', [LocationsController::class, 'index'])->name('index');

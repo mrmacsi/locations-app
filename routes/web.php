@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LocationsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,7 +13,5 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/get-all', [LocationsController::class, 'getAllLocations']);
+Route::get('/search', [LocationsController::class, 'searchBy']);

@@ -59,26 +59,6 @@ class ProcessLocations extends Command
             }
         }
         return $read;*/
-        $long = '-2.133104';
-        $lat = '57.129226';
-        $property =
-            Locations::select(
-                DB::raw("postcode, latitude, longitude, (
-            3959 * acos(
-                cos( radians(  ?  ) ) *
-                cos( radians( latitude ) ) *
-                cos( radians( longitude ) - radians(?) ) +
-                sin( radians(  ?  ) ) *
-                sin( radians( latitude ) )
-            )
-       ) AS distance")
-            )
-                ->having("distance", "<", "?")
-                ->orderBy("distance")
-                ->take(20)
-                ->setBindings([$lat, $long, $lat,  15])
-                ->get();
-        dd($property);
     }
 
     public function readCSV($csvFile, $array)
